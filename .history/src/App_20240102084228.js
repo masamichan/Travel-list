@@ -1,7 +1,7 @@
 const initialItems = [
   { id: 1, description: "Passports", quantity: 2, packed: false },
   { id: 2, description: "Socks", quantity: 12, packed: false },
-  { id: 3, description: "Socks", quantity: 12, packed: true },
+  { id: 2, description: "Socks", quantity: 12, packed: true },
 ];
 
 export default function App() {
@@ -20,20 +20,10 @@ function Logo() {
 }
 
 function Form() {
-  function handleSubmit(e) {
-    e.preventDefault();
-  }
-
   return (
-    <form className="add-form" onSubmit={handleSubmit}>
+    <form className="add-form">
       <h3>What do you need for Travel?</h3>
-      <select>
-        {Array.from({ length: 20 }, (_, i) => i + 1).map((num) => (
-          <option value={num} key={num}>
-            {num}
-          </option>
-        ))}
-      </select>
+      <select>{Array.from({ length: 20 }, (_, i) => i + 1)}</select>
       <input type="text" placeholder="Item..." />
       <button>Add</button>
     </form>
@@ -45,7 +35,7 @@ function PackingList() {
     <div className="list">
       <ul>
         {initialItems.map((item) => (
-          <Item item={item} key={item.id} />
+          <Item item={item} />
         ))}
       </ul>
     </div>

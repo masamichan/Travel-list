@@ -25,7 +25,7 @@ function Form() {
   }
 
   return (
-    <form className="add-form" onSubmit={handleSubmit}>
+    <form className="add-form">
       <h3>What do you need for Travel?</h3>
       <select>
         {Array.from({ length: 20 }, (_, i) => i + 1).map((num) => (
