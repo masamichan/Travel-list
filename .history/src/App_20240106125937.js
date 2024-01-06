@@ -78,25 +78,10 @@ function Form({ onAddItems }) {
 }
 
 function PackingList({ items, onDeleteItem, onToggleItem }) {
-  const [sortBy, setSortBy] = useState("input");
-  let sortedItems;
-
-  if (sortBy === "input") sortedItems = items;
-
-  if (sortBy === "description")
-    sortedItems = items
-      .slice()
-      .sort((a, b) => a.description.localCompare(b.description));
-
-  if (sortBy == "packed")
-    sortedItems = items
-      .slice()
-      .sort((a, b) => Number(a.packed) - Number(b.packed));
-
   return (
     <div className="list">
       <ul>
-        {sortedItems.map((item) => (
+        {items.map((item) => (
           <Item
             item={item}
             onDeleteItem={onDeleteItem}
@@ -105,15 +90,6 @@ function PackingList({ items, onDeleteItem, onToggleItem }) {
           />
         ))}
       </ul>
-      <div className="actions">
-        <select>
-          <option value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-            Sort by input order
-          </option>
-          <option value="description"> Sort by description</option>
-          <option value="packed">Sort by packed status</option>
-        </select>
-      </div>
     </div>
   );
 }
@@ -138,7 +114,7 @@ function Item({ item, onDeleteItem, onToggleItem }) {
 function Stats({ items }) {
   if (!items.length)
     return (
-      <p className="stats">
+      <p className="status">
         <em>Start adding some items to your packing list</em>
       </p>
     );

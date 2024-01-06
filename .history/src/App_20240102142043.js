@@ -26,9 +26,9 @@ export default function App() {
       <PackingList
         items={items}
         onDeleteItem={handleDelete}
-        onToggleItem={handleToggleItem}
+        onToggleItems={handleToggleItem}
       />
-      <Stats items={items} />
+      <Stats />
     </div>
   );
 }
@@ -46,7 +46,7 @@ function Form({ onAddItems }) {
 
     if (!description) return;
 
-    const newItem = { description, quantity, packed: false, id: Date.now() };
+    const newItem = { description, quantity, packed: false, id: Date.now };
 
     onAddItems(newItem);
     setDescription("");
@@ -77,43 +77,19 @@ function Form({ onAddItems }) {
   );
 }
 
-function PackingList({ items, onDeleteItem, onToggleItem }) {
-  const [sortBy, setSortBy] = useState("input");
-  let sortedItems;
-
-  if (sortBy === "input") sortedItems = items;
-
-  if (sortBy === "description")
-    sortedItems = items
-      .slice()
-      .sort((a, b) => a.description.localCompare(b.description));
-
-  if (sortBy == "packed")
-    sortedItems = items
-      .slice()
-      .sort((a, b) => Number(a.packed) - Number(b.packed));
-
+function PackingList({ items, onDeleteItem, onToggleItems }) {
   return (
     <div className="list">
       <ul>
-        {sortedItems.map((item) => (
+        {items.map((item) => (
           <Item
             item={item}
             onDeleteItem={onDeleteItem}
-            onToggleItem={onToggleItem}
+            onToggleItems={onToggleItems}
             key={item.id}
           />
         ))}
       </ul>
-      <div className="actions">
-        <select>
-          <option value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-            Sort by input order
-          </option>
-          <option value="description"> Sort by description</option>
-          <option value="packed">Sort by packed status</option>
-        </select>
-      </div>
     </div>
   );
 }
@@ -135,26 +111,10 @@ function Item({ item, onDeleteItem, onToggleItem }) {
   );
 }
 
-function Stats({ items }) {
-  if (!items.length)
-    return (
-      <p className="stats">
-        <em>Start adding some items to your packing list</em>
-      </p>
-    );
-
-  const numItems = items.length;
-  const numPacked = items.filter((item) => item.packed).length;
-  const percentage = Math.round((numPacked / numItems) * 100);
-
+function Stats() {
   return (
     <footer className="stats">
-      <em>
-        {percentage === 100
-          ? "You got everything ! Ready to go ✈️"
-          : `🧳 You have ${numItems} items on your list, and you already packed 
-        ${numPacked} (${percentage}%)`}
-      </em>
+      <em>🧳 You have X items on your list, and you already packed X (X%)</em>
     </footer>
   );
 }

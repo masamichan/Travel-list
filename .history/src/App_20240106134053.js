@@ -87,11 +87,11 @@ function PackingList({ items, onDeleteItem, onToggleItem }) {
     sortedItems = items
       .slice()
       .sort((a, b) => a.description.localCompare(b.description));
-
+      
   if (sortBy == "packed")
-    sortedItems = items
-      .slice()
-      .sort((a, b) => Number(a.packed) - Number(b.packed));
+  sortedItems = items
+  .slice()
+  .sort((a.b) => Number(a.packed) - Number(b.packed))
 
   return (
     <div className="list">
